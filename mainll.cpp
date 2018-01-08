@@ -17,7 +17,7 @@ void add(Node*&);//passes node by reference to add (as it may change head)
 void print(Node*); //takes by value node to help print
 void deletenode(int, Node*&, Node*, Node*);//passes one node by reference(as head may change)
 Node* sort(int, Node*); //passes in an id and node by value
-
+void average(Node*); //passes in node head by value
 
 
 int main() {
@@ -42,6 +42,7 @@ int main() {
       cout << "DELETE" << endl;
       cout << "HELP" << endl;
       cout << "QUIT" << endl;
+      cout << "AVERAGE" << endl;
     }
     
     else if (strcmp(input, "ADD") == 0) { //if command is add run add function
@@ -55,8 +56,11 @@ int main() {
     else if (strcmp(input, "QUIT") == 0) { //if command is quit exits loop
       run = false;
     }
+    else if (strcmp(input, "AVERAGE") == 0) { //if command is Average mean of gpa
+      average(head);
+    }
     
-    else if (strcmp(input, "DELETE") == 0) { //if command is quit exits loop
+    else if (strcmp(input, "DELETE") == 0) { //if command is delete run delete function
       int delid;//holds id for student
       cout << "Please input the id of the student you wish to delete" << endl;
       cin >> delid; //puts input into integer
@@ -226,5 +230,22 @@ void deletenode(int delid, Node*& head, Node* prior, Node* del) {
   }
   else{ //Either head didn't exist or the id was not in the list
     cout << "The specified Id does not exist" << endl; 
+  }
+}
+
+void average(Node* start) {//will get average of all nodes
+  if (start != NULL) { //if there are nodes
+    int count = 0; //counts number of terms
+    double gpa = 0; //holds sum of terms
+    while(start != NULL) {//while there are still nodes
+      gpa += start -> getStudent() -> getGPA();//adds gpa of current node to gpa
+      count += 1;//adds one to count
+      start = start -> getNext(); //moves to next node
+    }
+    gpa = gpa / count; //divides sum by number of terms
+    cout << "The average GPA is " << setprecision(3) << gpa << endl;//prints gpa to two decimal points 
+  }
+  else {
+    cout << "You need students in order to average their GPA" << endl;
   }
 }
